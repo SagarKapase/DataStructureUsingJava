@@ -4,81 +4,93 @@ public class LinkedList {
     {
         int data;
         Node next;
-        //constructor to initialize
-        Node(int d)
+
+        Node(int x)
         {
-            data = d;
+            data = x;
             next = null;
         }
     }
-    //inserting the data at beginning of the node
+    //inserting data into the linked list
     public Node insertNode(int data)
     {
-        //Using constructor to create memory and value assignment
         Node new_node = new Node(data);
-        //current head becomes this new_nodes next
         new_node.next = head;
         head = new_node;
         return head;
     }
+    //delete the node
+    public void delete()
+    {
+        if (head == null)
+        {
+            System.out.println("List is empty");
+            return;
+        }
+        System.out.println("Deleted data :: "+head.data);
+        head = head.next;
+    }
+    //delete last
+    public void deleteLast()
+    {
+        if (head==null)
+        {
+            System.out.println("List is empty");
+            return;
+        }
+        if (head.next == null)
+        {
+            System.out.println("Deleted data "+head.data);
+            head = head.next;
+        }
+        Node previous = null;
+        Node temp = head;
 
-    //insert at end
+        while (temp.next != null)
+        {
+            previous = temp;
+            temp = temp.next;
+        }
+        System.out.println("Deleted data :: "+temp.data);
+        previous.next = null;
+    }
+    //insert end
     public void insertEnd(int data)
     {
         Node new_node = new Node(data);
         if (head == null)
         {
             head = new_node;
+            System.out.println("Inserted :: "+new_node.data);
             return;
         }
+
+        //need to be traverse the linked list
         Node temp = head;
         while (temp.next != null)
         {
             temp = temp.next;
         }
         temp.next = new_node;
+        System.out.println(new_node.data + " inserted");
     }
-    //delete method
-    public void delete()
+
+
+    //reverse linked list
+    public void reverseLinkedList()
     {
-        if (head == null)
+        Node temp = head;
+        Node previous = null,current = null;
+        while (temp != null)
         {
-            System.out.println("List is empty, not possible to delete");
-            return;
+            current = temp;
+            temp = temp.next;
+
+            //reverse the link
+            current.next = previous;
+            previous = current;
+            head = current;
         }
-        System.out.println("Deleted Data :: "+head.data);
-        //move head to the next node
-        head = head.next;
-    }
-    //inserting the element at nth position of the linked list
-    public void insertNthPosition(int n, int data)
-    {
-        int size = calcSize(head);
-        if (n<1 || n > size)
-        {
-            System.out.println("Can't Insert");
-        }else
-        {
-            Node new_Node = new Node(data);
-            //required to traverse
-            Node temp = head;
-            while (--n > 0)
-            {
-                temp = temp.next;
-            }
-            new_Node.next = temp.next;
-            temp.next = new_Node;
-        }
-    }
-    public int calcSize(Node node)
-    {
-        int size = 0;
-        while (node!= null)
-        {
-            node = node.next;
-            size++;
-        }
-        return size;
     }
     //disply method
     public void display()
@@ -102,6 +114,10 @@ public class LinkedList {
         listObj.insertNode (5);
 
         listObj.display ();
+        listObj.reverseLinkedList();
+        listObj.display();
+        /*listObj.deleteLast();
+        listObj.display ();
         listObj.delete ();
         listObj.delete ();
         listObj.delete ();
@@ -109,8 +125,8 @@ public class LinkedList {
         listObj.display ();
 
         listObj.insertEnd(85);
-        listObj.display();
-        listObj.insertNthPosition(1,100);
-        listObj.display();
+        listObj.display();*/
+        /*listObj.insertNthPosition(1,100);
+        listObj.display();*/
     }
 }
